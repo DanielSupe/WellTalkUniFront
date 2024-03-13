@@ -13,7 +13,6 @@ export const RegisterSlice = createSlice({
     reducers:{
         RegisterUser: (state)=>{
             state.Loading = true;
-            state.prueba += 1
         },
         RegisterUserSuccess: (state)=>{
             state.Loading = false;

@@ -23,14 +23,15 @@ import NavW from './nav';
 import { HomeSVG, UserSVG, calendarSVG, menuSVG } from '../../../public/svgs/svgs';
 import Link from 'next/link';
 import Home from '@/app/page';
+import { PrimaryColorApp } from '@/helpers/constantes';
 
 const drawerWidth = 240;
 
 const roter = [
-    {name:"Home",link:"/",SVG:HomeSVG()},
-    {name:"Agendar Citas",link:"/Agendar",SVG:<MailIcon/>},
-    {name:"Calendario",link:"/Calendario",SVG:calendarSVG()},
-    {name:"Psicologos",link:"/Psicologos",SVG:UserSVG()}
+    {name:"Home",link:"/Main",SVG:HomeSVG()},
+    {name:"Agendar Citas",link:"/Main/Agendar",SVG:<MailIcon/>},
+    {name:"Calendario",link:"/Main/Calendario",SVG:calendarSVG()},
+    {name:"Psicologos",link:"/Main/Psicologos",SVG:UserSVG()}
 ]
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -126,7 +127,7 @@ export default function MiniDrawer({children}:props) {
         <NavW/>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open} sx={{ '& .MuiDrawer-paper': { backgroundColor: '#d1643e' } }}>
+      <Drawer variant="permanent" open={open} sx={{ '& .MuiDrawer-paper': { backgroundColor: PrimaryColorApp } }}>
   <DrawerHeader>
     <IconButton onClick={handleDrawerClose}>
       {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -190,7 +191,7 @@ export default function MiniDrawer({children}:props) {
 </Drawer>
 <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
         <DrawerHeader />
-        {children}
+      {children}
 
       </Box>
     </Box>

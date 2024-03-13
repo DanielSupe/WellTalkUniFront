@@ -1,12 +1,28 @@
+import { MdOutlineMenuOpen } from "react-icons/md";
 
 import Link from 'next/link'
 import DarkMode from './DarkMode'
+import { PrimaryColorApp } from '@/helpers/constantes'
+import { AppBar } from "@mui/material";
+import PersistentDrawerRight from "./SideBarInMovilNav";
+import LogoHome from "./LogoHome";
+
+
+let lista = [{label:"DarkMode", link:"/"}
+            ,{label:"Home", link:"/"}
+            ,{label:"Contactanos", link:"/contacto"},
+            {label:"Registrate", link:"/Register"},
+            {label:"Iniciar sesion", link:"/Login"},
+          
+          ]
+
 const NavW = () => {
   return (
-    <div className='w-full h-[8vh] flex justify-center md:justify-end items-center'>
+    <div className='w-full h-[8vh] flex justify-center md:justify-end items-center dark:bg-darkBG dark:text-white overflow-hidden'>
 
-
-        <Link href="/" className=' border-b-4 border-black dark:border-white text-xl md:mr-auto ml-4'><strong>WellTalkUni</strong></Link>
+      <div className="md:mr-auto ml-4">
+        <LogoHome/> {/*Si ya se logueo tiene que poner el logo con link a main/home  */}
+      </div>
 
         <div className=' hidden md:block'>
           <div className='flex'>
@@ -17,13 +33,16 @@ const NavW = () => {
             </div>
 
           <div className='flex mx-4'>
-            <Link href="/Register">Registrarte</Link>
-            <p className='mx-2'> | </p>
-            <Link href="Login">Iniciar sesion</Link>
+            <div className=' p-2'><Link href="/Register">Registrarte</Link></div>
+            <p className=' py-2'> | </p>
+            <div style={{backgroundColor: `${PrimaryColorApp}`}} className=' p-2 rounded-md'><Link href="Login">Iniciar sesion</Link></div>
           </div>
           </div>
         </div>
 
+        <div className='block md:hidden w-5'>
+        <PersistentDrawerRight list={lista}/>
+        </div>
     </div>
   )
 }

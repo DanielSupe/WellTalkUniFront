@@ -13,10 +13,12 @@ const config: Config = {
       backgroundColor: {
         'bright': 'linear-gradient(to right, #ffffff, #f0f0f0)',
         'primary-pastel': '#d6bae4',
-        'darkBG': '#282828'
+        'darkBG': '#00001A',
+        'primaryWellTalkUni':"#d1643e"
       },
       fontFamily:{
-        body: ["Open Sans", "sans-serif"]
+        body: ["Open Sans", "sans-serif"],
+        title:["Timmana", "sans-serif"],
       },
       colors:{
         'primary-pastel': '#b19cd9'
@@ -27,3 +29,4 @@ const config: Config = {
   plugins: [],
 };
 export default config;
+

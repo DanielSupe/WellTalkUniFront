@@ -5,6 +5,7 @@ import Image from "next/image";
 import { menuSVG } from "../../public/svgs/svgs";
 import Box from '@mui/material/Box';
 import HomeTemplate from "@/modules/home/template";
+import NavW from "@/modules/GlobalComponents/nav";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -15,6 +16,9 @@ export const metadata: Metadata = {
 export default function Home() {
 
   return (
-    <HomeTemplate/>
+    <div>
+      <NavW/>
+      <HomeTemplate/>
+    </div>
   );
 }
