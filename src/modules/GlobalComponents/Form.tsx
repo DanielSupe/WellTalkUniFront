@@ -6,15 +6,16 @@ interface types{
     onChange: ((nameKey: string, value: string) => void) | null
     classname:string
     form:any
+    classnameContainer?:string
 }
 
 
-const FormW = ({list,onChange,classname,form}:types) => {
+const FormW = ({list,onChange,classname,form,classnameContainer}:types) => {
   return (
     <>
         {list.map((campo:any, index)=>{
             return(
-                <span className='w-full text-start' key={campo.title}>
+                <span className={`w-full text-start ${classnameContainer}`} key={campo.title}>
                     <p>{campo.title}</p>
                     <InputW
                         value={form[campo.nameKey]}

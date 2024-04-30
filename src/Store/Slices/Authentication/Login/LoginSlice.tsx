@@ -7,25 +7,24 @@ const initialState = {
     exito: false
 };
 
-export const RegisterSlice = createSlice({
-    name:"Register",
+export const LoginSlice = createSlice({
+    name:"Login",
     initialState,
     reducers:{
-        RegisterUser: (state,action)=>{
-            console.log("sliceee")
+        LoginUser: (state,action)=>{
             state.Loading = true;
         },
-        RegisterUserSuccess: (state,action)=>{
+        LoginUserSuccess: (state,action)=>{
             state.User = action.payload
             state.Loading = false;
             state.exito = true;
         },
-        RegisterUserFail: (state,action)=>{
+        LoginUserFail: (state,action)=>{
             state.Loading = false;
             state.error = action.payload
         }
     }
 })
 
-export const { RegisterUser, RegisterUserSuccess, RegisterUserFail} = RegisterSlice.actions;
-export default RegisterSlice.reducer
+export const { LoginUser, LoginUserSuccess, LoginUserFail} = LoginSlice.actions;
+export default LoginSlice.reducer

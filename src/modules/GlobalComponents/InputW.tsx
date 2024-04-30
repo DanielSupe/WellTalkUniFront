@@ -28,7 +28,7 @@ const InputW = ({
         
         (<Input
           type="select"
-          className={classname}
+          className={`text-black ${classname}`}
           value={value}
           onChange={(e) => handleChange(nameKey, e.target.value)}
         >
@@ -43,7 +43,7 @@ const InputW = ({
         (<Input
             type={type}
             placeholder={title}
-            className={classname}
+            className={`text-black ${classname}`}
             onChange={(e)=>{handleChange(nameKey, e.target.value)}}
             value={value}
         />)}

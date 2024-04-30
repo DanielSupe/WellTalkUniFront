@@ -13,13 +13,9 @@ const HomeTemplate = () => {
 
     const dispatch = useAppDispatch();
 
-    const {contador} = useAppSelector((state)=>({
-        contador:state.Register.prueba
-      }))
-
 
       useEffect(()=>{
-        dispatch(RegisterUser())
+        dispatch(RegisterUser(""))
       },[])
 
 
@@ -28,7 +24,7 @@ const HomeTemplate = () => {
   return (
     <div className='w-full'>
         <div className='w-full h-[72vh]'>
-            <Hero imagenUrl="Images/Home/Imagen_3.jpg" title="WellTalkUni" subtitulo='Donde tu bienestar importa'/>
+            <Hero imagenUrl="/Images/Home/Imagen_3.jpg" title="WellTalkUni" subtitulo='Donde tu bienestar importa'/>
         </div>
         <BannerHome items={items}/>
 

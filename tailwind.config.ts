@@ -13,7 +13,7 @@ const config: Config = {
       backgroundColor: {
         'bright': 'linear-gradient(to right, #ffffff, #f0f0f0)',
         'primary-pastel': '#d6bae4',
-        'darkBG': '#00001A',
+        'darkBG': '#111010',
         'primaryWellTalkUni':"#d1643e"
       },
       fontFamily:{
@@ -21,7 +21,8 @@ const config: Config = {
         title:["Timmana", "sans-serif"],
       },
       colors:{
-        'primary-pastel': '#b19cd9'
+        'primary-pastel': '#b19cd9',
+        'primaryWellTalkUni':"#d1643e"
       }
 
     },

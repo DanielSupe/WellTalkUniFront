@@ -7,16 +7,18 @@ const IButtonComponent = ({
   className = '',
   btnIcon = <AiFillForward/>,
   disabled = false,
+  classNameContend = "flex justify-center items-center p-5 rounded-xl bg-primaryWellTalkUni mt-auto transition",
+  classNameContainer = "flex"
 }: any) => {
   return (
-    <div className='flex'>
+    <div className={classNameContainer}>
       <Button
         disabled={disabled}
         type={type}
         onClick={() => actionOnClick()}
         className={className}
       >
-        <div className={`flex justify-center items-center p-5 rounded-xl bg-primaryWellTalkUni mt-auto transition ${disabled ? " cursor-no-drop": " cursor-pointer hover:bg-orange-300"}`}>
+        <div className={`${classNameContend} ${disabled ? " cursor-no-drop": " cursor-pointer hover:bg-orange-300"}`}>
             {btnIcon}
             {label}
         </div>
