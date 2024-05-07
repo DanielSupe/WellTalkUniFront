@@ -13,7 +13,7 @@ const CalendarTemplate = () => {
        dispatch(getCitas())
     },[])
   return (
-    <div className='w-full min-h-full box-border p-2 pt-6 font-title'>
+    <div className='w-full min-h-full box-border p-2 pt-6 font-title dark:bg-bgCalendar dark:text-white'>
       <FullCalendar
       plugins={[ dayGridPlugin ]}
       initialView="dayGridMonth"

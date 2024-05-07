@@ -5,15 +5,10 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import FormW from "@/modules/GlobalComponents/Form";
+import IButtonComponent from "@/modules/GlobalComponents/ButtonW";
+import { IoIosLogIn } from "react-icons/io";
 
 const AgendarTemplate = () => {
-  const handleDateClick = (date: any) => {
-    console.log(date, "DATEE")
-    setForm({
-      ...form,
-      Date: date.dateStr
-    })
-  };
 
 
   const [form, setForm] = useState({
@@ -29,6 +24,17 @@ const AgendarTemplate = () => {
     )
 }
 
+const handleDateClick = (date: any) => {
+  setForm({
+    ...form,
+    Date: date.dateStr
+  })
+};
+
+  const createCita = ()=>{
+
+  }
+
   let AgendarCita = [
     { type: "date", title: "Fecha", nameKey: "Date", typeCampo: "date" },
     { type: "time", title: "Hora", nameKey: "Hora", typeCampo: "time" },
@@ -36,9 +42,9 @@ const AgendarTemplate = () => {
   ];
 
   return (
-    <div className="w-full flex flex-col md:flex-row justify-start md:justify-center items-center box-border p-2">
+    <div className="w-full md:min-h-[90vh] flex flex-col md:flex-row justify-start md:justify-center items-center box-border p-2">
       <div className="md:w-[40%] flex justify-center items-center overflow-auto">
-        <div className="w-full min-h-[400px] box-border p-2 font-title ">
+        <div className="w-full  box-border p-2 font-title ">
           <FullCalendar
             plugins={[dayGridPlugin, interactionPlugin]}
             initialView="dayGridMonth"
@@ -46,16 +52,20 @@ const AgendarTemplate = () => {
           />
         </div>
       </div>
-      <div className=" flex-grow h-full box-border p-2">
-        <div className="box-border p-2 flex flex-col justify-center items-center w-full">
+      <div className=" flex-grow h-full  flex justify-center items-start">
+        <div className=" w-[90%] h-full box-border p-2 inline-flex flex-col justify-center items-center ">
+
+            <span className=" text-start w-full box-border p-4 font-title font-medium text-2xl">Agenda tu cita!</span>
 
             <FormW
               form={form}
-              classname="py-2 px-2 w-[80%] border border-black rounded-xl"
+              classname="py-2 px-2 w-full border border-black rounded-xl"
               onChange={handleForm}
               list={AgendarCita}
             />
-          
+
+          <IButtonComponent btnIcon={<IoIosLogIn/>}  className='w-full' classNameContend='flex justify-center p-2 rounded-xl bg-primaryWellTalkUni items-center w-full mt-auto transition' classNameContainer='flex mt-4 w-full justify-center items-center' disabled={false} actionOnClick={createCita} label="Agendar cita"/>
+
         </div>
       </div>
     </div>

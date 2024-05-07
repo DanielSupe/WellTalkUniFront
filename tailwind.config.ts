@@ -14,7 +14,8 @@ const config: Config = {
         'bright': 'linear-gradient(to right, #ffffff, #f0f0f0)',
         'primary-pastel': '#d6bae4',
         'darkBG': '#111010',
-        'primaryWellTalkUni':"#d1643e"
+        'primaryWellTalkUni':"#d1643e",
+        'bgCalendar':"#232323"
       },
       fontFamily:{
         body: ["Open Sans", "sans-serif"],
