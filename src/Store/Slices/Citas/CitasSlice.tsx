@@ -1,11 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
 
+import { transformarCitas } from "@/helpers/tool_helpers";
+import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-    User: {},
+    citas: [],
     Loading: false,
     error:{},
     exito: false
 };
+
 
 export const CitasSlice = createSlice({
     name:"Citas",
@@ -15,11 +17,15 @@ export const CitasSlice = createSlice({
         getCitas: (state)=>{
             state.Loading = true;
         },
+        getReinicioExito: (state)=>{
+            state.exito = false;
+        },
         getCitasSuccess: (state,action)=>{
-            state.Loading = true;
+            state.citas = transformarCitas(action.payload.data.appointments)
+            state.Loading = false;
         },
         getCitasFail: (state,action)=>{
-            state.Loading = true;
+            state.Loading = false;
         },
         //POST-----------------------------------------
         CreateCitas: (state,action)=>{
@@ -27,12 +33,14 @@ export const CitasSlice = createSlice({
         },
         CreateCitasSuccess: (state,action)=>{
             state.Loading = true;
+            state.exito = true;
         },
         CreateCitasFail: (state,action)=>{
             state.Loading = true;
+            state.exito = false;
         },
     }
 })
 
-export const {getCitas} = CitasSlice.actions;
+export const {getCitas,getCitasSuccess,getCitasFail,CreateCitas,CreateCitasSuccess,CreateCitasFail,getReinicioExito} = CitasSlice.actions;
 export default CitasSlice.reducer

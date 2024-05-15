@@ -1,13 +1,25 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import { useAppDispatch } from '@/Store/hooks'
+import { useAppDispatch,useAppSelector } from '@/Store/hooks'
 import { getCitas } from '@/Store/Slices/Citas/CitasSlice';
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 
 const CalendarTemplate = () => {
     const dispatch = useAppDispatch();
+
+    const { Loading, error, exito,citas } = useAppSelector((state) => ({
+      error: state.Citas.error,
+      Loading: state.Citas.Loading,
+      exito: state.Citas.exito,
+      citas: state.Citas.citas,
+  
+    }))
+
+    useEffect(()=>{
+      console.log(citas, "cambioo citass")
+    },[citas])
 
     useEffect(()=>{
        dispatch(getCitas())
@@ -17,11 +29,7 @@ const CalendarTemplate = () => {
       <FullCalendar
       plugins={[ dayGridPlugin ]}
       initialView="dayGridMonth"
-      events={[
-        { title: 'event 1', date: '2024-04-28' },
-        { title: 'event 2', date: '2024-05-02' },
-        { title: 'event 2', date: '2024-04-10' }
-      ]}
+      events={citas}
     />
     </div>
   )

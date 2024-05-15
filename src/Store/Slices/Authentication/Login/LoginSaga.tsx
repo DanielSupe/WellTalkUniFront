@@ -18,6 +18,7 @@ function* RegisterUserProfile(data:any) {
                 title:"success",
                 icon:"success"
             })
+        localStorage.setItem("USER",JSON.stringify(rep))
     } catch (error:any) {
         console.log(error,"ERRORR")
         yield put(LoginUserFail(error))

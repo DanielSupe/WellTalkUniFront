@@ -1,19 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import FormW from "@/modules/GlobalComponents/Form";
 import IButtonComponent from "@/modules/GlobalComponents/ButtonW";
 import { IoIosLogIn } from "react-icons/io";
+import { useAppDispatch, useAppSelector} from '@/Store/hooks'
+import { CreateCitas, getReinicioExito } from "@/Store/Slices/Citas/CitasSlice";
+import { useRouter } from "next/navigation"
 
 const AgendarTemplate = () => {
 
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const [form, setForm] = useState({
     Date:"",Hora:"",Psicologos:""
   });
+
+  const { Loading, error, exito } = useAppSelector((state) => ({
+    error: state.Citas.error,
+    Loading: state.Citas.Loading,
+    exito: state.Citas.exito,
+
+  }))
+
+
+  useEffect(()=>{
+    if(exito){
+      router.push('/Main/Calendario')
+      dispatch(getReinicioExito())
+    }
+  },[exito])
 
   const handleForm = (nameKey:string, change:any)=>{
     setForm(
@@ -32,13 +52,13 @@ const handleDateClick = (date: any) => {
 };
 
   const createCita = ()=>{
-
+    dispatch(CreateCitas(form))
   }
 
   let AgendarCita = [
     { type: "date", title: "Fecha", nameKey: "Date", typeCampo: "date" },
     { type: "time", title: "Hora", nameKey: "Hora", typeCampo: "time" },
-    { type: "select", title: "Psicologos", nameKey: "Psicologos", options: [] },
+    { type: "select", title: "Psicologos", nameKey: "Psicologos", options: [{label:"Frederick Starks",value:"Frederick Starks"},{label:"Wilhelm Wundt",value:"Wilhelm Wundt"}] },
   ];
 
   return (
