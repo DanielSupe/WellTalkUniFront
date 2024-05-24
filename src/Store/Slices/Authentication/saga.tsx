@@ -34,7 +34,7 @@ function* RegisterUserProfile(data:any) {
 
     switch(data.payload.profile){
         case "STUDENT":
-            const {semester,career} = data.payload
+        const {semester,career} = data.payload
          object = {
             ...object,
             profile:{
@@ -44,7 +44,18 @@ function* RegisterUserProfile(data:any) {
             }
             
         }
-        console.log(object,"bodyyy")
+        case "PSYCHOLOGIST":
+            case "STUDENT":
+                const {specialty,yearsExperience} = data.payload
+                 object = {
+                    ...object,
+                    profile:{
+                        ...object.profile,
+                        specialty,
+                        yearsExperience
+                    }
+                    
+                }
     }
 
     try {
@@ -71,7 +82,7 @@ function* RegisterUserProfile(data:any) {
 
 
 function* AuthenticationSaga (){
-    yield takeEvery('Register/RegisterUser', RegisterUserProfile)
+    yield takeLatest('Register/RegisterUser', RegisterUserProfile)
 }
 
 export default AuthenticationSaga;

@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import { useAppDispatch, useAppSelector } from "@/Store/hooks";
 import Image from "next/image";
@@ -14,6 +13,8 @@ export const metadata: Metadata = {
 
 
 export default function Home() {
+
+
 
   return (
     <div>

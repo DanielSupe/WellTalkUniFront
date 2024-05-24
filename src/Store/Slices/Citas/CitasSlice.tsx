@@ -5,7 +5,8 @@ const initialState = {
     citas: [],
     Loading: false,
     error:{},
-    exito: false
+    exito: false,
+    psicologos: []
 };
 
 
@@ -39,8 +40,19 @@ export const CitasSlice = createSlice({
             state.Loading = true;
             state.exito = false;
         },
+        getListPsicologos:(state)=>{
+            state.Loading = true;
+        },
+        getListPsicologosSuccess: (state,action)=>{
+            state.Loading = true;
+            state.psicologos = action.payload
+        },
+        getListPsicologosFail: (state,action)=>{
+            state.Loading = true;
+            state.exito = false;
+        },
     }
 })
 
-export const {getCitas,getCitasSuccess,getCitasFail,CreateCitas,CreateCitasSuccess,CreateCitasFail,getReinicioExito} = CitasSlice.actions;
+export const {getCitas,getCitasSuccess,getCitasFail,CreateCitas,CreateCitasSuccess,CreateCitasFail,getReinicioExito,getListPsicologos,getListPsicologosSuccess,getListPsicologosFail} = CitasSlice.actions;
 export default CitasSlice.reducer

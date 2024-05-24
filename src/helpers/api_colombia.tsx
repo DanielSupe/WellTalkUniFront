@@ -39,3 +39,17 @@ export const fetchDataDepartaments = async () => {
       console.error('Error:', error);
     }
 };
+
+
+export function procesarPsicologos(jsonData:any) {
+  // Convertir el JSON a un objeto de JavaScript
+  const psicologos = JSON.parse(jsonData);
+
+  // Crear la lista de resultados
+  const resultado = psicologos.map((psicologo:any) => ({
+      label: psicologo.name,
+      value: psicologo.id
+  }));
+
+  return resultado;
+}

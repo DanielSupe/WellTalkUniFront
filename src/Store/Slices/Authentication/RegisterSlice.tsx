@@ -12,8 +12,10 @@ export const RegisterSlice = createSlice({
     initialState,
     reducers:{
         RegisterUser: (state,action)=>{
-            console.log("sliceee")
             state.Loading = true;
+        },
+        ReiniciarExito: (state)=>{
+            state.exito = false;
         },
         RegisterUserSuccess: (state,action)=>{
             state.User = action.payload
@@ -27,5 +29,5 @@ export const RegisterSlice = createSlice({
     }
 })
 
-export const { RegisterUser, RegisterUserSuccess, RegisterUserFail} = RegisterSlice.actions;
+export const { RegisterUser, RegisterUserSuccess, RegisterUserFail,ReiniciarExito} = RegisterSlice.actions;
 export default RegisterSlice.reducer

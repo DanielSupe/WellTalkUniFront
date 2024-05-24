@@ -5,26 +5,38 @@ import Swal from "sweetalert2"
 import UrlBack from "@/helpers/url_helper"
 
 
-function* RegisterUserProfile(data:any) {
+const LoginUserProfileFunt = async (data:any) =>{
     const {email,password} = data.payload
     try {
-        const rep: Promise<any> = yield axios.post(`${UrlBack}/auth/login`,{
+        const rep = await axios.post(`${UrlBack}/auth/login`,{
             "email": email,
             "password": password
         })
-          yield put(LoginUserSuccess(rep))
-            Swal.close()
-            Swal.fire({
-                title:"success",
-                icon:"success"
-            })
-        localStorage.setItem("USER",JSON.stringify(rep))
+        console.log(rep,"dataa")
+        localStorage.setItem("USER",JSON.stringify(rep.data))
+        return rep;
     } catch (error:any) {
-        console.log(error,"ERRORR")
+        throw error;
+
+    }
+    
+}
+
+
+function* LoginUserProfile(data:any) {
+    try {
+        const resp: Promise<any> = yield call(LoginUserProfileFunt,data)
+        yield put(LoginUserSuccess(resp))
+        Swal.close()
+        Swal.fire({
+            title:"success",
+            icon:"success"
+        })
+    } catch (error:any) {
         yield put(LoginUserFail(error))
         Swal.close()
         Swal.fire({
-            title:error.response.data.message,
+            title:error.response ? error.response.data.message : "An error occurred",
             icon:"error"
         })
     }
@@ -36,7 +48,7 @@ function* RegisterUserProfile(data:any) {
 
 
 function* LoginSaga (){
-    yield takeLatest('Login/LoginUser', RegisterUserProfile)
+    yield takeLatest('Login/LoginUser', LoginUserProfile)
 }
 
 export default LoginSaga;

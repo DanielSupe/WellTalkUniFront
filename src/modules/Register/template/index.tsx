@@ -10,7 +10,7 @@ import { Input } from 'reactstrap';
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { fetchCities, fetchDataDepartaments } from '@/helpers/api_colombia';
 import { useAppSelector, useAppDispatch } from '@/Store/hooks'
-import { RegisterUser } from '@/Store/Slices/Authentication/RegisterSlice'
+import { RegisterUser, ReiniciarExito } from '@/Store/Slices/Authentication/RegisterSlice'
 import { useRouter } from "next/navigation"
 
 
@@ -27,7 +27,7 @@ const RegisterTemplate = () => {
 
 
 
-    const [form,setForm] = useState<any>({name:"",LastName:"",email:"",date:"",profile:"",department:"",city:"",University:"", password:"",confirmPassword:"",address:"",phoneNumber:"",career:"",semester:""});
+    const [form,setForm] = useState<any>({name:"",LastName:"",email:"",date:"",profile:"",department:"",city:"",University:"", password:"",confirmPassword:"",address:"",phoneNumber:"",career:"",semester:"",specialty:"",yearsExperience:""});
 
     const [siguiente, setsiguiente] = useState("Primer");
     const [disabled, setDisabled] = useState(true)
@@ -74,7 +74,7 @@ let primerPaso = [
 ]
 
 let segundoPaso = [
-    {type: "select", title:"Tipo de perfil", nameKey:"profile",options:[ { value: "STUDENT", label: "Estudiante" }, { value: "Psicologo", label: "Psicologo"}] },
+    {type: "select", title:"Tipo de perfil", nameKey:"profile",options:[ { value: "STUDENT", label: "Estudiante" }, { value: "PSYCHOLOGIST", label: "Psicologo"}] },
     {type: "select", title:"Departamento", nameKey:"department",options:options},
     {type: "select", title:"Ciudad", nameKey:"city",options:optionsCity },
     {type: "text", title:"Universidad", nameKey:"University",typeCampo:"input" },
@@ -83,6 +83,12 @@ let segundoPaso = [
 let EstudiateProps = [
     {type: "text", title:"Carrera", nameKey:"career", },
     {type: "number", title:"Semestre", nameKey:"semester", },
+    {type: "number", title:"Numero", nameKey:"phoneNumber", },
+]
+
+let PsicologoProps = [
+    {type: "text", title:"Especialidad", nameKey:"specialty", },
+    {type: "number", title:"Años de experiencia", nameKey:"yearsExperience", },
     {type: "number", title:"Numero", nameKey:"phoneNumber", },
 ]
 
@@ -139,8 +145,8 @@ let ultimoPaso = [
         else if(siguiente == "Tercer" && form.profile == "STUDENT" && (form.semester != "" && form.career != "" && form.phoneNumber != "") && form.semester > 0 && form.semester < 11){
             setDisabled(false)
         }
-        else if(siguiente == "Tercer" && form.profile == "Psicologo"){
-            //
+        else if(siguiente == "Tercer" && form.profile == "PSYCHOLOGIST" && (form.yearsExperience != "" && form.specialty && form.phoneNumber != "")){
+            setDisabled(false)
         }
 
         else if(siguiente == "Ultimo" && (form.email != "" && form.password != "" && form.confirmPassword != "") && form.password == form.confirmPassword){
@@ -179,6 +185,7 @@ let ultimoPaso = [
     useEffect(()=>{
         if(exito){
             router.push('/Login')
+            dispatch(ReiniciarExito())
         }
       },[exito])
 
@@ -206,13 +213,15 @@ let ultimoPaso = [
                      {siguiente == "Segundo" ? (
                         <FormW form={form} classname='py-2 px-2 w-[100%] border border-black rounded-xl' onChange={handleForm} list={segundoPaso}/>
                      ):null}
-                     {siguiente == "Tercer" && form.profile == "Psicologo" ? (
-                        <p>Psicologo</p>
+                     {siguiente == "Tercer" && form.profile == "PSYCHOLOGIST" ? (
+                        <FormW form={form} classname='py-2 px-2 w-[100%] border border-black rounded-xl' onChange={handleForm} list={PsicologoProps}/>
                      ):null}
 
                      {siguiente == "Tercer" && form.profile == "STUDENT" ? (
                         <FormW form={form} classname='py-2 px-2 w-[100%] border border-black rounded-xl' onChange={handleForm} list={EstudiateProps}/>
                      ):null}
+
+                     
 
                      {siguiente == "Ultimo" ? (
                         <FormW form={form} classname='py-2 px-2 w-[100%] border border-black rounded-xl' onChange={handleForm} list={ultimoPaso}/>

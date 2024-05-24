@@ -20,18 +20,30 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import NavW from './nav';
+import { FaSignOutAlt } from "react-icons/fa";
 import { HomeSVG, UserSVG, calendarSVG, menuSVG } from '../../../public/svgs/svgs';
 import Link from 'next/link';
 import Home from '@/app/page';
 import { PrimaryColorApp } from '@/helpers/constantes';
-
+import { useRouter } from "next/navigation"
+import DarkMode from './DarkMode';
+import { OptenerUserType } from '@/helpers/tool_helpers';
 const drawerWidth = 240;
 
 const roter = [
+    {html: <DarkMode/>,key:"Dark_Mode_SideBaard"},
     {name:"Home",link:"/Main",SVG:HomeSVG()},
     {name:"Agendar Citas",link:"/Main/Agendar",SVG:<MailIcon/>},
     {name:"Calendario",link:"/Main/Calendario",SVG:calendarSVG()},
-    {name:"Psicologos",link:"/Main/Psicologos",SVG:UserSVG()}
+    {name:"Psicologos",link:"/Main/Psicologos",SVG:UserSVG()},
+    {name:"Salir",link:"/Logout",SVG:<FaSignOutAlt/>}
+]
+
+const roterPsi = [
+  {html: <DarkMode/>,key:"Dark_Mode_SideBaard"},
+  {name:"Home",link:"/Main",SVG:HomeSVG()},
+  {name:"Calendario",link:"/Main/Calendario",SVG:calendarSVG()},
+  {name:"Salir",link:"/Logout",SVG:<FaSignOutAlt/>}
 ]
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -106,7 +118,9 @@ interface props {children: React.ReactNode}
 
 export default function MiniDrawer({children}:props) {
   const theme = useTheme();
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
+  const [listTitles, setListTitles] = React.useState<any>([])
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -116,6 +130,14 @@ export default function MiniDrawer({children}:props) {
     setOpen(false);
   };
 
+  React.useEffect(()=>{
+    if(!localStorage.getItem("USER")){
+      router.push('/')
+    }else{
+      const userType = OptenerUserType();
+      setListTitles(userType == "PSYCHOLOGIST" ? roterPsi:roter)
+    }
+  },[])
 
 
   return (
@@ -135,31 +157,42 @@ export default function MiniDrawer({children}:props) {
   </DrawerHeader>
   <Divider />
   <List>
-    {roter.map((text, index) => (
-      <Link href={`${text.link}`} key={text.name}>
-        <ListItem disablePadding sx={{ display: 'block' }}>
-        <ListItemButton
-          sx={{
-            minHeight: 48,
-            justifyContent: open ? 'initial' : 'center',
-            px: 2.5,
-          }}
-        >
-          <ListItemIcon
+    {listTitles.map((text:any) => {
+      if(text.name){
+        return(
+          <Link href={`${text.link}`} key={text.name}>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+          <ListItemButton
             sx={{
-              minWidth: 0,
-              mr: open ? 3 : 'auto',
-              justifyContent: 'center',
+              minHeight: 48,
+              justifyContent: open ? 'initial' : 'center',
+              px: 2.5,
             }}
           >
-            {text.SVG}
-          </ListItemIcon>
-          <ListItemText primary={text.name} sx={{ opacity: open ? 1 : 0 }} />
-        </ListItemButton>
-      </ListItem>
-      
-      </Link>
-    ))}
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : 'auto',
+                justifyContent: 'center',
+              }}
+            >
+              {text.SVG}
+            </ListItemIcon>
+            <ListItemText primary={text.name} sx={{ opacity: open ? 1 : 0 }} />
+          </ListItemButton>
+        </ListItem>
+        
+        </Link>
+        )
+      }else{
+        return(
+          <div className='w-full flex justify-center items-center box-border p-2' key={text.key}>
+            {text.html}
+          </div>
+
+        )
+      }
+    })}
   </List>
   <Divider/>
   {/* <List>

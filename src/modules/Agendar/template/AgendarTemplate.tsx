@@ -8,8 +8,9 @@ import FormW from "@/modules/GlobalComponents/Form";
 import IButtonComponent from "@/modules/GlobalComponents/ButtonW";
 import { IoIosLogIn } from "react-icons/io";
 import { useAppDispatch, useAppSelector} from '@/Store/hooks'
-import { CreateCitas, getReinicioExito } from "@/Store/Slices/Citas/CitasSlice";
+import { CreateCitas, getListPsicologos, getReinicioExito } from "@/Store/Slices/Citas/CitasSlice";
 import { useRouter } from "next/navigation"
+import { procesarPsicologos } from "@/helpers/tool_helpers";
 
 const AgendarTemplate = () => {
 
@@ -17,13 +18,14 @@ const AgendarTemplate = () => {
   const router = useRouter();
 
   const [form, setForm] = useState({
-    Date:"",Hora:"",Psicologos:""
+    Date:"",Hora:"",Psicologo:""
   });
 
-  const { Loading, error, exito } = useAppSelector((state) => ({
+  const { Loading, error, exito,psicologos } = useAppSelector((state) => ({
     error: state.Citas.error,
     Loading: state.Citas.Loading,
     exito: state.Citas.exito,
+    psicologos:state.Citas.psicologos
 
   }))
 
@@ -34,6 +36,12 @@ const AgendarTemplate = () => {
       dispatch(getReinicioExito())
     }
   },[exito])
+
+
+  useEffect(()=>{
+    dispatch(getListPsicologos())
+  },[])
+  
 
   const handleForm = (nameKey:string, change:any)=>{
     setForm(
@@ -58,7 +66,7 @@ const handleDateClick = (date: any) => {
   let AgendarCita = [
     { type: "date", title: "Fecha", nameKey: "Date", typeCampo: "date" },
     { type: "time", title: "Hora", nameKey: "Hora", typeCampo: "time" },
-    { type: "select", title: "Psicologos", nameKey: "Psicologos", options: [{label:"Frederick Starks",value:"Frederick Starks"},{label:"Wilhelm Wundt",value:"Wilhelm Wundt"}] },
+    { type: "select", title: "Psicologo", nameKey: "Psicologo", options: procesarPsicologos(psicologos)},
   ];
 
   return (

@@ -22,9 +22,16 @@ export const LoginSlice = createSlice({
         LoginUserFail: (state,action)=>{
             state.Loading = false;
             state.error = action.payload
-        }
+        },
+        LogoutUser: (state)=>{
+            localStorage.removeItem("USER")
+            state.User= {};
+            state.Loading= false;
+            state.error={};
+            state.exito= false;
+        },
     }
 })
 
-export const { LoginUser, LoginUserSuccess, LoginUserFail} = LoginSlice.actions;
+export const { LoginUser, LoginUserSuccess, LoginUserFail,LogoutUser} = LoginSlice.actions;
 export default LoginSlice.reducer

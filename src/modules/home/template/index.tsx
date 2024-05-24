@@ -1,14 +1,20 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import Hero from '../components/Hero'
 import BannerHome from '../components/Banner'
 import { CandadoSVG, ComunidadSVG, ManoSVG, PhoneSVG } from '../../../../public/svgs/svgs'
-
+import { useRouter } from "next/navigation"
 
 
 const HomeTemplate = () => {
+  const router = useRouter();
 
+  useEffect(()=>{
+    if(localStorage.getItem("USER")){
+      router.push('/Main')
+    }
+  },[])
 
 
 
