@@ -1,10 +1,21 @@
 export function transformarCitas(listaCitas:any) {
     const userType = OptenerUserType().toLowerCase();
+    const userPerfil = changeUser(userType);
     return listaCitas.map((cita:any) => {
         return {
-            title: `Cita con: ${cita[userType].name}`,
+            title: `Cita con: ${cita[userPerfil].name} ${cita[userPerfil].lastName} ${cita[userPerfil].phoneNumber}`,
             date: cita.date,
-            text:"PRUEBAS PARA VER COMO LLEGA ESTO"
+            status: cita.status,
+            perfil:{
+                name: cita[userPerfil].name,
+                lastName: cita[userPerfil].lastName,
+                career: cita[userPerfil].career,
+                semester: cita[userPerfil].semester,
+                phoneNumber: cita[userPerfil].phoneNumber,
+                address: cita[userPerfil].address,
+                university:cita[userPerfil].university,
+                dateOfBirth: cita[userPerfil].dateOfBirth
+            }
         };
     });
 }
@@ -26,3 +37,15 @@ export function procesarPsicologos(psicologos:any) {
     return user.userType;
   
   }
+
+   function changeUser(user:string) {
+    switch(user){
+        case "student":
+            return "psychologist"
+        case "psychologist":
+            return "student"
+        default:
+            return ""
+    }
+  }
+  

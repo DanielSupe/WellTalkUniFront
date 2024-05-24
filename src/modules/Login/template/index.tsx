@@ -9,10 +9,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation"
 import React, { useEffect, useState } from "react";
 import { IoIosLogIn } from "react-icons/io";
-
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const LoginTemplate = () => {
-
+  const siteKey = '6LdgY-cpAAAAAAekR8Msv21tC6jQAO8jbCLRCEZO';
   const router = useRouter();
 
 
@@ -39,12 +39,12 @@ const LoginTemplate = () => {
     { type: "password", title: "Contraseña", nameKey: "password" },
   ];
 
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ email: "", password: "",ReCAPTCHAForm:false });
   const [disabled,setDisabled] = useState<boolean>(true)
 
   useEffect(()=>{
-    const {email,password} = form
-    if(email != "" && password!= ""){
+    const {email,password,ReCAPTCHAForm} = form
+    if(email != "" && password!= "" && ReCAPTCHAForm){
       setDisabled(false)
     }else{
       setDisabled(true)
@@ -87,6 +87,13 @@ const LoginTemplate = () => {
     }
   },[exito])
 
+  const handleRecaptcha = (change:any)=>{
+    setForm({
+      ...form,
+      ReCAPTCHAForm: true
+    })
+  }
+
   return (
     <div
       className=" w-screen h-screen fixed inset-0 z-0 bg-cover bg-righ overflow-auto bg-white  dark:bg-darkBG dark:text-white  bg-no-repeat bg-center flex items-start md:items-center justify-center box-border  p-2"
@@ -112,6 +119,12 @@ const LoginTemplate = () => {
             onChange={handleForm}
             list={Login}
           />
+          <div className=" box-border p-2">
+          <ReCAPTCHA
+            sitekey={siteKey}
+            onChange={handleRecaptcha}
+          />
+          </div>
 
           <div className="w-full flex justify-end items-center">
            <p className="font-medium underline cursor-pointer">Olvidaste tu contraseña?</p>
