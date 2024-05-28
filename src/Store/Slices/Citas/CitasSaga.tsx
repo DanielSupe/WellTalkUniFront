@@ -79,7 +79,6 @@ function* CreateCitas({payload}:any) {
 
 const axiosGetPsicolgosList = async()=>{
     const rep:any = await axios.get(`${UrlBack}/psychologist-profiles`)//Cambiar ruta
-    console.log(rep, "dasndsajdnasj")
     return rep.data;
 }
 

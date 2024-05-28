@@ -1,11 +1,13 @@
 export function transformarCitas(listaCitas:any) {
     const userType = OptenerUserType().toLowerCase();
     const userPerfil = changeUser(userType);
+    console.log(listaCitas,"listCita")
     return listaCitas.map((cita:any) => {
         return {
             title: `Cita con: ${cita[userPerfil].name} ${cita[userPerfil].lastName} ${cita[userPerfil].phoneNumber}`,
             date: cita.date,
             status: cita.status,
+            perfilType:userPerfil,
             perfil:{
                 name: cita[userPerfil].name,
                 lastName: cita[userPerfil].lastName,
@@ -14,7 +16,9 @@ export function transformarCitas(listaCitas:any) {
                 phoneNumber: cita[userPerfil].phoneNumber,
                 address: cita[userPerfil].address,
                 university:cita[userPerfil].university,
-                dateOfBirth: cita[userPerfil].dateOfBirth
+                dateOfBirth: cita[userPerfil].dateOfBirth,
+                specialty:cita[userPerfil].specialty,
+                yearsExperience:cita[userPerfil].yearsExperience,
             }
         };
     });

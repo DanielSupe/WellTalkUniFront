@@ -7,11 +7,13 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
 import Popup from '../components/Popup';
-
+import Table from '../components/Table';
+import { FaUserTie } from "react-icons/fa";
+import { PiStudentFill } from "react-icons/pi";
 const CalendarTemplate = () => {
     const dispatch = useAppDispatch();
     const [popUpTutorial,setPopUpTutorial] = useState(false);
-    const [cita, setCita] = useState<any>({});
+    const [cita, setCita] = useState<any>([]);
 
     
 
@@ -35,7 +37,8 @@ const CalendarTemplate = () => {
       })
       if(cita.length >0){
         setPopUpTutorial(true);
-        setCita(cita[0])
+        console.log(cita,"cita en 0 ")//Cambiar para que funcione con varias
+        setCita(cita)
       }
       console.log(cita, "cita especifica")
       console.log(date,"dataaa")
@@ -55,8 +58,20 @@ const CalendarTemplate = () => {
     />
 
 <Popup  isOpen={popUpTutorial} onClose={handlePopUp} name={"New Account"}>
-                <div className='flex w-full h-full justify-center items-center'>
-                  {cita.title}
+                <div className='flex flex-col w-full h-auto justify-start items-center box-border p-2 '>
+                  {cita.map((item:any,index:number)=>{
+                    return(
+                      <div className='w-full min-h-[120px] box-border mt-2 flex flex-col justify-center items-center' key={`mapCitas${index}`}>
+                        <div className='flex justify-center items-center box-border p-2'>
+                          {item.perfilType == "psychologist" ? <FaUserTie size={70}/>:<PiStudentFill size={70}/> }
+                          <p>{item.date}</p>
+                        </div>
+                        <div className='w-full overflow-auto'>
+                          <Table objet={item.perfil}/>
+                        </div>
+                      </div>
+                    )
+                  })}
                 </div>
             </Popup>
     </div>
